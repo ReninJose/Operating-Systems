@@ -1,0 +1,6 @@
+Name: Renin Kingsly Jose 
+Course: EECE.4811 Operating Systems
+
+This assignment uses a "Make" file to build the following codes. Typing just "make" in the shell compiles and execute the code at the same time.
+If editing "test.txt" is desired, run "make clean" in the shell to clean up previous compilation. This will make room for new executable with new "test.txt".
+Edit "test.txt", and rerun the program by typing "make".
