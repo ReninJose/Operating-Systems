@@ -1,22 +1,31 @@
 // Renin Kingsly Jose
 // EECE. 4810 Operating Systems
 
-#include "processor.h"
-
+#include "process.h"
 
 int main(){
+    int parent_pid;
+    int status;
     pid_t pid;
 
-    pid = fork();
+    cout << "Parent PID is " << getpid() << endl;
+    parent_pid = getpid();
 
-    // First Child Processor
-    if (pid == 0){
-        printChild();
-    }  
-    // Parent Processor
-    else{
-        wait(NULL);
-        cout << "Parent's PID = " << getpid() << endl;
+    for(int i = 0; i < 3; i++){
+        // Forcing only the parent process to create children
+        if(getpid() == parent_pid){
+            pid = fork();
+            if (pid == 0){
+                printStart();
+            }
+        }
+        else
+            continue;
     }
-    return 0;
+    if(getpid() == parent_pid){
+        for(int i = 0; i < 3; i++){
+            printDone(wait(&status));
+        }
+    }
+    exit(0);
 }
