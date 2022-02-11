@@ -11,7 +11,7 @@ build: $(OBJ) $(DEPS)
 	mkdir source && mv main.o process.o source/
 
 run:
-	./program2
+	./program2 $(PROCESS)
 
 clean: 
 	rm -f program2 && rm -drf source
@@ -19,4 +19,4 @@ clean:
 debug:
 	make clean
 	make build
-	make run
+	make run $(PROCESS)

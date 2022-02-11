@@ -3,15 +3,25 @@
 
 #include "process.h"
 
-void printStart() {
-    cout << "Started child with PID: " << getpid() << endl;
+void start_process(pid_t &pid, int& child_num) {
+
+    cout << "Started child " << child_num << " with PID: " << pid << endl;
 }
 
-void printDone(pid_t processDone) {
-    cout << "Child (PID: " << processDone << ") finished" << endl;
+void end_process(pid_t processDone, vector<int> &child_pid) {
+
+    for (int i = 0; i < child_pid.size(); i++) {
+        if (child_pid.at(i) == processDone) {
+            cout << "Child " << i+1 << " (PID: " << processDone << ") finished" << endl;
+        }
+        else
+            continue;
+    }
 }
 
 const int printError() {
-    cout << "Fork Failed" << endl;
+
+    perror("Fork failed");
+
     return 1;
 }

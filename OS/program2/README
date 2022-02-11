@@ -1,0 +1,19 @@
+University of Massachusetts Lowell
+EECE.4810 Operating Systems
+Programming Project 1: Multi-Process Programming
+
+Contributors:
+Renin Kingsly Jose
+Thrishanth Anadaraj
+
+Commands:
+
+"make build" - Compiles and assembles the code and dumbs object files in source directory.
+
+"make run PROCESS=<variable>" - Runs the code. PROCESS creates number of child processes (excluding parent process). For instance, PROCESS=3 creates 3 child processes.
+
+"make clean" - Removes the executable file and source directory. Makes room for new compilation.
+
+NOT FOR USERS
+
+"make debug PROCESS=<variable>" - Cleans, Builds, and Runs all together. (Saves time while debugging code) 
