@@ -19,4 +19,4 @@ clean:
 debug:
 	make clean
 	make build
-	make run $(PROCESS)
+	make run 
