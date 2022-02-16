@@ -1,4 +1,5 @@
 // Renin Kingsly Jose
+// Thrishanth Anandaraj
 // EECE. 4810 Operating Systems
 
 #ifndef PROCESS_H
