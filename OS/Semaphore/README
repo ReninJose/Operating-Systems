@@ -1,0 +1,18 @@
+Author: Renin Kinsgly Jose
+EECE.4811 Operating Systems
+
+This folder consist of 3 c++ programs (barrier.cpp, rendezvous.cpp, and fork-join.cpp) performing semaphore operations. The names of the files are self-explanatory.
+
+The following commands are available for user to run the programs using the makfile.
+
+"make build" - Compiles all the C++ code into respective executable files.
+
+"make fork_" - Runs the fork-join.cpp program
+
+"make rendezvous_" - Runs the rendezvous.cpp program
+
+"make barrier_ NUM_OF_THREADS=<integer>" - Runs the barrier.cpp program. Takes in a command line argument that specifies the number of threads needed to be produced by the code. 
+
+"make clean" - Removes all the executable files from the directory.
+
+NOTE: A small "_" is added at the end of each run command to differentiate it with the executable file names. Otherwise, makefile throws and error.
