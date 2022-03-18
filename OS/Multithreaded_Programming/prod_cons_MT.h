@@ -20,20 +20,21 @@ pthread_mutex_t lock;
 
 class monitor {
     public:
-        monitor(int const &size);
+        monitor(int const &size);       // Constructor
 
-        void buffer_modifier();
+        void buffer_modifier(int random);
         
     private:
         int buffer_size;                // User defined Buffer size
         int *buffer;                    // Address for the buffer 
         bool buffer_state;              // To check if buffer is full or empty
+        int index;                      // Index    
 };
 
 // Producer function
-void* producer(int* thread_id);
+void* producer(void* arg);
 
 //consumer function
-void* consumer();
+void* consumer(void* arg);
 
 #endif
