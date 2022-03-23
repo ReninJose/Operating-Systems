@@ -17,14 +17,11 @@ using namespace std;
 
 pthread_mutex_t lock;
 
-
 class monitor {
     public:
-        monitor(int const &size);       // Constructor
-
+        void buffer_initialize(int const &size);
         void buffer_modifier(int random);
         
-    private:
         int buffer_size;                // User defined Buffer size
         int *buffer;                    // Address for the buffer 
         bool buffer_state;              // To check if buffer is full or empty

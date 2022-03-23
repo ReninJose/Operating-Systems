@@ -4,6 +4,8 @@
 
 #include "prod_cons_MT.h"
 
+// Global monitor object
+monitor m;
 
 int main(int argc, char* argv[]){
 
@@ -11,7 +13,7 @@ int main(int argc, char* argv[]){
     int num_of_consumer = atoi(argv[3]);
     int thread_id;
 
-    monitor m(atoi(argv[1]));           // Setting up buffer size
+    m. buffer_initialize(atoi(argv[1]));           // Setting up buffer size
 
     // Initialize threads
     pthread_t producer_thread[num_of_producer];
@@ -42,9 +44,19 @@ int main(int argc, char* argv[]){
         exit(0);                        
     }
 
+    // Join all producer threads back to parent thread
+    for(int k = 0; k < num_of_producer; k++) {
+        pthread_join(producer_thread[k], NULL);
+        cout << "MAIN: Producer " << k + 1 << " joined" << endl;
+    }
 
+    // Join all consumer threads back to parent thread
+    for(int k = 0; k < num_of_consumer; k++) {
+        pthread_join(consumer_thread[k], NULL);
+        cout << "MAIN: Consumer " << k + 1 << " joined " << endl;
+    }
 
-    // Join all threads back to parent thread
+    cout << "MAIN: program completed" << endl;
 
     return 0;
 }
