@@ -8,23 +8,24 @@
 #include<iostream>
 #include<pthread.h>
 #include<stdlib.h>
+#include<unistd.h>
 
 // Preprocessors
-#define empty false
-#define full true
+#define empty 0
+#define full 1
+#define neither 2
 
 using namespace std;
 
-pthread_mutex_t lock;
-
 class monitor {
     public:
-        void buffer_initialize(int const &size);
-        void buffer_modifier(int random);
+        void buffer_initializer(int const &size);
+        void buffer_modifier(int data, int thread_id);
+        void check_buffer();
         
         int buffer_size;                // User defined Buffer size
         int *buffer;                    // Address for the buffer 
-        bool buffer_state;              // To check if buffer is full or empty
+        int buffer_state;              // To check if buffer is full or empty
         int index;                      // Index    
 };
 
@@ -33,5 +34,11 @@ void* producer(void* arg);
 
 //consumer function
 void* consumer(void* arg);
+
+// Function for producer thread to generate number
+void generate(int thread_number, int producer_values, int iterator);
+
+// Function to keep consumer thread in loop
+void consumer_loop(int consumer_val, int thread_number, int iterator);
 
 #endif

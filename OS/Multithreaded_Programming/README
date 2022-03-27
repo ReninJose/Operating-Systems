@@ -1,0 +1,17 @@
+University of Massachusetts Lowell
+EECE.4810 Operating Systems
+Project 2: Multi-threaded programming
+
+Contributors:
+Renin Kinhgsly Jose
+
+NOTE: The program does not end always. Some of the threads are racing and locking others, and source of the problem couldn't be identified. But when the program runs, it runs correctly. So spamming with inputs is suggested.
+Due to time constraints, this project will no longer recieve an update.
+
+Commands:
+
+"make build" - Compiles the code and creates an executable file "thread".
+
+"make run b=<int> p=<int> c=<int>" - runs "thread" with thread buffer_size, number of producer, and number of consumer respectively.
+
+"make clean" - Removes thread from the directory.
