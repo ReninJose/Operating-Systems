@@ -1,4 +1,5 @@
 // Renin Kingsly Jose
+// Thrishanth Anandaraj
 // EECE.4811 Operating Systems
 // main.cpp
 
@@ -14,7 +15,8 @@ monitor m;
 int number_of_consumer;
 int number_of_producer;
 
-extern pthread_cond_t condition;
+extern pthread_cond_t cond1;
+extern pthread_cond_t cond2;
 
 int main(int argc, char* argv[]){
 
@@ -23,7 +25,7 @@ int main(int argc, char* argv[]){
     int thread_id;
     int rc;
 
-    m. buffer_initializer(atoi(argv[1]));           // Setting up buffer size
+    m.buffer_initializer(atoi(argv[1]));           // Setting up buffer size
 
     // Initialize threads
     pthread_t producer_thread[num_of_producer];
@@ -72,7 +74,8 @@ int main(int argc, char* argv[]){
     }
 
     // Broadcast any remaining consumer thread that is stuck
-    pthread_cond_broadcast(&condition);
+    pthread_cond_broadcast(&cond1);
+    pthread_cond_broadcast(&cond2);
 
     // Join all consumer threads back to parent thread
     for(int k = 0; k < num_of_consumer; k++) {

@@ -1,11 +1,13 @@
 // Renin Kingsly Jose
+// Thrishanth Anandaraj
 // EECE.4811 Operating Systems
 // prod_cons_MT.cpp
 
 #include "prod_cons_MT.h"
 
-// Declaration condition variable for producer and consumer threads
-pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
+// Declaration condition variables for producer and consumer threads
+pthread_cond_t cond1 = PTHREAD_COND_INITIALIZER;            // For full buffer
+pthread_cond_t cond2 = PTHREAD_COND_INITIALIZER;            // For empty buffer
 
 extern monitor m;                       // Shared object from main
 extern int number_of_consumer;          // Number of consumer data from main
@@ -16,7 +18,7 @@ extern pthread_mutex_t consumer_lock;   // Lock for consumer CS in buffer
 
 // Global data
 int shared = 0;                         // Shared between producer and consumer
-int p_counter = 0;                      // Counter to incremement through buffer
+int p_counter = 0;                      // Counter to increment through buffer
 int c_counter = 0;
 
 void monitor::buffer_initializer(int const &size){
@@ -48,7 +50,7 @@ void monitor::buffer_modifier(int data, int thread_id){
         // If buffer full, wait
         if (buffer_state == full) {
             cout << "P" << thread_id << " : Blocked due to buffer full" << endl;
-            pthread_cond_wait(&condition, &lock);
+            pthread_cond_wait(&cond1, &lock);
             cout << "P" << thread_id << " : Done waiting on full buffer" << endl;
         }
 
@@ -64,7 +66,7 @@ void monitor::buffer_modifier(int data, int thread_id){
             else {
                 cout << "P" << thread_id << " : Writing " << data << " in position " << p_counter << endl;
                 buffer[p_counter] = data;
-                pthread_cond_signal(&condition);
+                pthread_cond_signal(&cond2);
                 write = true;
                 if(p_counter == buffer_size - 1) {
                     p_counter = 0;
@@ -94,7 +96,7 @@ void monitor::buffer_modifier(int data, int thread_id){
         // If buffer empty, wait
         if (buffer_state == empty) {
             cout << "C" << thread_id << " : Blocked due to empty buffer" << endl;
-            pthread_cond_wait(&condition, &lock);
+            pthread_cond_wait(&cond2, &lock);
             cout << "C" << thread_id << " : Done waiting on empty buffer" << endl;
         }
         // Read and clear data in buffer
@@ -110,7 +112,7 @@ void monitor::buffer_modifier(int data, int thread_id){
             else {
                 cout << "C" << thread_id << " : Reading " << buffer[c_counter] << " from position " << c_counter << endl;
                 buffer[c_counter] = 0;
-                pthread_cond_signal(&condition);
+                pthread_cond_signal(&cond1);
                 read = true;
                 if(c_counter == buffer_size - 1) {
                     c_counter = 0;
@@ -154,11 +156,11 @@ void monitor::check_buffer() {
         }
     }
     
-    if(not_empty == buffer_size ) {
+    if(not_empty == buffer_size) {
        
         buffer_state = full;
     }
-    else if (not_full == buffer_size ) {
+    else if (not_full == buffer_size) {
         
         buffer_state = empty;
     }
@@ -176,6 +178,8 @@ void generate(int thread_number, int producer_values, int iterator) {
         sleep(0.2);
         m.buffer_modifier(random_number, thread_number);
     }
+
+    cout << "P" << thread_number << ": Exiting" << endl;
 }
 
 void consumer_loop(int consumer_val, int thread_number, int iterator) {                          
@@ -184,6 +188,8 @@ void consumer_loop(int consumer_val, int thread_number, int iterator) {
         sleep(0.2);
         m.buffer_modifier(0, thread_number);
     }
+
+    cout << "C" << thread_number << ": Exiting" << endl;
 }
 
 // Producer thread function
@@ -192,9 +198,10 @@ void* producer(void* arg) {
     int thread_number = (*(int*)arg);
     shared = shared + (m.buffer_size * 2);
 
-    cout << "P" << thread_number << ": producing " << m.buffer_size * 2 <<  " values" << endl;
-
-    generate(thread_number, (m.buffer_size * 2), 0);
+    if (m.buffer_state != full) {
+        cout << "P" << thread_number << ": producing " << m.buffer_size * 2 <<  " values" << endl;
+        generate(thread_number, (m.buffer_size * 2), 0);
+    }
 
     return NULL;
 }

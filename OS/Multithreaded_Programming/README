@@ -3,7 +3,8 @@ EECE.4810 Operating Systems
 Project 2: Multi-threaded programming
 
 Contributors:
-Renin Kinhgsly Jose
+Renin Kingsly Jose
+Thrishanth Anandaraj
 
 NOTE: The program does not end always. Some of the threads are racing and locking others, and source of the problem couldn't be identified. But when the program runs, it runs correctly. So spamming with inputs is suggested.
 Due to time constraints, this project will no longer recieve an update.

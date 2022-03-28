@@ -1,4 +1,5 @@
 // Renin Kingsly Jose
+// Thrishanth Anandaraj
 // EECE.4811 Operating Systems
 // prod_cons_MT.h
 
@@ -26,7 +27,7 @@ class monitor {
         int buffer_size;                // User defined Buffer size
         int *buffer;                    // Address for the buffer 
         int buffer_state;              // To check if buffer is full or empty
-        int index;                      // Index    
+        // int index;                      // Index    
 };
 
 // Producer function
